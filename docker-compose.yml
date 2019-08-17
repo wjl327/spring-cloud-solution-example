@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  sc-eureka-server:
+    image:  spring-cloud-solution-example/sc-eureka-server
+    hostname: sc-eureka-server
+    ports:
+      - "8761:8761"
+
+  microservice-product-server:
+    image:  spring-cloud-solution-example/microservice-product-server
+    links:
+      - "sc-eureka-server"
+    ports:
+      - "32001:32001"

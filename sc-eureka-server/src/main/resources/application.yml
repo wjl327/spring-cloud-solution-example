@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: sc-eureka-server
+
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: localhost
+    lease-expiration-duration-in-seconds: 90
+    lease-renewal-interval-in-seconds: 30
+  server:
+    enable-self-preservation: true
+    renewal-percent-threshold: 0.85
+    eviction-interval-timer-in-ms: 6000
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+---
+spring:
+  profiles:
+    docker
+  application:
+    name: sc-eureka-server
+
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: eureka-server
+    lease-expiration-duration-in-seconds: 90
+    lease-renewal-interval-in-seconds: 30
+  server:
+    enable-self-preservation: true
+    renewal-percent-threshold: 0.85
+    eviction-interval-timer-in-ms: 6000
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
