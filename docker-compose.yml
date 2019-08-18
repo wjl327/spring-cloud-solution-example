@@ -7,9 +7,17 @@ services:
     ports:
       - "8761:8761"
 
+  microservice-repertory-server:
+    image:  spring-cloud-solution-example/microservice-repertory-server
+    links:
+      - "sc-eureka-server"
+    ports:
+      - "32003:32003"
+
   microservice-product-server:
     image:  spring-cloud-solution-example/microservice-product-server
     links:
       - "sc-eureka-server"
+      - "microservice-repertory-server"
     ports:
       - "32001:32001"

@@ -2,12 +2,14 @@ package com.wjl327.product.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-public class ProductServerApplication {
+@EnableFeignClients
+public class MicroserviseProductServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProductServerApplication.class, args);
+        SpringApplication.run(MicroserviseProductServerApplication.class, args);
     }
 
 }

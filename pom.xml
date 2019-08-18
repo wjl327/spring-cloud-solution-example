@@ -11,6 +11,7 @@
 
     <modules>
         <module>sc-eureka-server</module>
+        <module>microservice-repertory-server</module>
         <module>microservice-product-server</module>
     </modules>
 

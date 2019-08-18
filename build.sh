@@ -6,7 +6,7 @@ dockerTag=latest
 mvn clean package
 
 #docker
-modules=(sc-eureka-server microservice-product-server)
+modules=(sc-eureka-server microservice-repertory-server microservice-product-server)
 for module in ${modules[*]}
 do
     docker build -t "spring-cloud-solution-example/${module}:${dockerTag}" ${module}
