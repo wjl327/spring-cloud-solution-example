@@ -1,6 +1,7 @@
 package com.wjl327.product.server.controller;
 
 
+import com.google.common.collect.Lists;
 import com.wjl327.product.server.service.RepertoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ public class ProductController {
     @Autowired
     private RepertoryService repertoryService;
 
-    private Map<String, Map<String, Object>> products = new ConcurrentHashMap<>();
+    private Map<String, Map<String, Object>> repoProductMap = new ConcurrentHashMap<>();
 
     public ProductController() {
         initData();
@@ -28,7 +29,7 @@ public class ProductController {
     //http://localhost:32001/product/findProductById?productId=0x0001
     @RequestMapping(value = "/findProductById", method = RequestMethod.GET)
     public Map<String, Object> findProductById(@RequestParam String productId) {
-        Map<String, Object> product = products.get(productId);
+        Map<String, Object> product = repoProductMap.get(productId);
         if (product == null){
             buildResult(10000, String.format("Not found product(%s).", productId), product);
         }
@@ -39,18 +40,20 @@ public class ProductController {
         return buildResult(0, "ok", product);
     }
 
-    //http://localhost:32002/product/findProductListByIds?productIds=0x0001,0x0002,0x0003
-//    @RequestMapping(value = "/findProductListByIds", method = RequestMethod.GET)
-//    public Map<String, Object> findProductListByIds(@RequestParam List<String> productIds) {
-//
-//        repertoryService.findListByProductIds(productIds));
-//        List<Map<String, Object>> resultData = new ArrayList<>();
-//        for(String productId : productIds) {
-//            Map<String, Object> product = products.get(productId);
-//        }
-//
-//        return buildResult(0, "ok", resultData);
-//    }
+    //http://localhost:32001/product/findProductListByIds?productIds=0x0001,0x0002,0x0003
+    @RequestMapping(value = "/findProductListByIds", method = RequestMethod.GET)
+    public Map<String, Object> findProductListByIds(@RequestParam List<String> productIds) {
+        List<Map<String, Object>> products = Lists.newArrayList();
+        for(String productId : productIds) {
+            Map<String, Object> product = repoProductMap.get(productId);
+            if (product != null){
+                Map<String, Integer> stockMap = findStockMap(productId);
+                product.put("stock", stockMap.get(productId));
+                products.add(product);
+            }
+        }
+        return buildResult(0, "ok", products);
+    }
 
     private Map<String, Integer> findStockMap(String... productIds) {
         Map<String, Object> result = repertoryService.findListByProductIds(Arrays.asList(productIds));
@@ -78,7 +81,7 @@ public class ProductController {
             product.put("id", id);
             product.put("name", name);
             product.put("price", price);
-            products.put(id, product);
+            repoProductMap.put(id, product);
         }
     }
 

@@ -13,6 +13,8 @@
         <module>sc-eureka-server</module>
         <module>microservice-repertory-server</module>
         <module>microservice-product-server</module>
+        <module>microservice-recommend-server</module>
+        <module>microservice-product-homepage</module>
     </modules>
 
     <properties>
@@ -39,6 +41,11 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>20.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

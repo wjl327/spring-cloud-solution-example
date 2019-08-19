@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: microservice-product-homepage
+
+server:
+  port: 32000
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
+
+---
+spring:
+  profiles:
+    docker
+  application:
+    name: microservice-product-homepage
+
+server:
+  port: 32000
+
+eureka:
+  instance:
+    hostname: sc-eureka-server
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
